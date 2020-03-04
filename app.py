@@ -14,12 +14,21 @@ mongo = PyMongo(app)
 def get_all_ips():
   ips = mongo.db.ips
   output = []
-  for s in ips.find():
+  for s in ips.find().sort('service'):
     output.append({'ip' : s['ip'], 'service' : s['service']})
   return jsonify({'result' : output})
 
+@app.route('/ips/<ip>', methods=['GET'])
+def get_one_ip(ip):
+  ips = mongo.db.ips
+  output = []
+  s = ips.find({'ip' : ip+'/32'})
+  for dado in s:
+    output.append({'ip' : dado['ip'], 'service' : dado['service']})
+  return jsonify({'result' : output})
+
 @app.route('/ips/service/<service>', methods=['GET'])
-def get_one_ip(service):
+def get_service_ips(service):
   ips = mongo.db.ips
   output = []
   s = ips.find({'service' : service})
@@ -36,7 +45,7 @@ def add_ip():
   service = request.json['service']
   ip_id = ips.insert({'ip': ip, 'service': service})
   new_ip = ips.find_one({'_id': ip_id })
-  output = {'name' : new_ip['ip'], 'service' : new_ip['service']}
+  output = {'ip' : new_ip['ip'], 'service' : new_ip['service']}
   return jsonify({'result' : output})
 
 @app.route('/ips/delete', methods=['POST'])
