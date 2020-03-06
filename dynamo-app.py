@@ -4,6 +4,7 @@ from flask import request
 import boto3
 from boto3 import resource
 from boto3.dynamodb.conditions import Key, Attr
+import json
 
 app = Flask(__name__)
 
@@ -13,7 +14,8 @@ dynamodb = boto3.resource('dynamodb')
 def get_all_ips():
     table = dynamodb.Table('ips')
     response = table.scan()
-    return jsonify({'result' : response['Items']})
+    result = sorted(response['Items'], key=lambda x : x['service'], reverse=False)
+    return jsonify({'result' : result})
 
 @app.route('/<ip>', methods=['GET'])
 def get_one_ip(ip):
