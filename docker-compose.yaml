@@ -1,0 +1,10 @@
+version: "3.7"
+services: 
+  app:
+    image: 5aips:03
+    environment:
+      token: JAhMkQj2THxL25Ty
+    build:
+      context: .
+    ports:
+      - "80:5000"
