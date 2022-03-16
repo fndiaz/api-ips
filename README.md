@@ -3,17 +3,17 @@ External IPs
 
 ## List IPs
 ```
-curl --request GET 'https://ip-ranges.quintoandar.com.br'
+curl --request GET 'https://ip-ranges.example.com.br'
 ```
 
 ## List IPs by Service
 ```
-curl --request GET 'https://ip-ranges.quintoandar.com.br/service/NAME_SERVICE'
+curl --request GET 'https://ip-ranges.example.com.br/service/NAME_SERVICE'
 ```
 
 ## Add IP
 ```
-curl --request POST 'https://ip-ranges.quintoandar.com.br/' \
+curl --request POST 'https://ip-ranges.example.com.br/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 	"ip": "8.8.8.8/32",
@@ -24,7 +24,7 @@ curl --request POST 'https://ip-ranges.quintoandar.com.br/' \
 
 ## Delete IP
 ```
-curl --location --request POST 'https://ip-ranges.quintoandar.com.br/delete' \
+curl --location --request POST 'https://ip-ranges.example.com.br/delete' \
 --header 'Content-Type: application/json' \
 --data-raw '{
       "ip": "8.8.8.8/32",
